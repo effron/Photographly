@@ -1,6 +1,8 @@
 <h2> Cat Photos </h2>
-<ul class="photo_index">
+
+
+<ul class="photo-index">
   <% _.each(photos, function(photo){%>
-    <li><img src="<%= photo.file_path %>"></li>
+    <li data-id="<%= photo.id %>"><img class="thumbnail" src="<%= photo.file_path %>"></li>
   <% }); %>
 </ul>

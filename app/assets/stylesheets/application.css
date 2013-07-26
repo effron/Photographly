@@ -11,3 +11,17 @@
  *= require_self
  *= require_tree .
  */
+body {
+  font-family:sans-serif;
+}
+.thumbnail {
+  width: 150px;
+}
+
+li {
+  list-style: none;
+}
+
+.big > img {
+  width: 500px;
+}
