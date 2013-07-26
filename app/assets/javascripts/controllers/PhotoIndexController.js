@@ -16,7 +16,11 @@ PhotoIndexController.prototype.render = function() {
 }
 
 PhotoIndexController.prototype.bindElement = function() {
-  this.$element.find(".photo-index").on("click", 'li', function(event){
+  this.$element.find(".photo-index").on("mouseenter", 'li', function(event){
+    $(this).toggleClass("big")
     new PhotoShowController($(this));
+  })
+  this.$element.find(".photo-index").on("mouseleave", 'li', function(event){
+    $(this).toggleClass("big")
   })
 }

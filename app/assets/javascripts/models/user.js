@@ -9,13 +9,14 @@ User.baseUrl = "/users/"
 
 User.all = [];
 
-User.fetch = function(){
+User.fetch = function(callback){
   var url = this.baseUrl;
   User.all = [];
   $.get(url, function(response){
     _.each(response, function(userJson){
       User.all.push(new User(userJson))
     });
+  callback();
   });
 }
 

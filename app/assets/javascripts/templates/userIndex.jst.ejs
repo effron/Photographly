@@ -1,0 +1,8 @@
+<form>
+  <select class="user-index">
+    <option value=""></option>
+    <% _.each(users, function(user){ %>
+      <option value="<%= user.id %>"><%= user.name %></option>
+    <% }); %>
+  </select>
+</form>
