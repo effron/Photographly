@@ -1,8 +1,14 @@
 Photographly::Application.routes.draw do
 
-  resources :users
+  resources :users, only: [:new, :create, :show]
+
   resource :session, only: [:new, :create, :destroy]
 
+  resources :photos, only: [:index, :create, :destroy, :show] do
+    resources :tags, only: [:create, :index]
+  end
+
+  resources :friends, only: [:create, :show, :index]
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
