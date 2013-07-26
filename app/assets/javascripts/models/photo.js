@@ -4,20 +4,44 @@ var Photo = function(attrs){
     this.file_path = attrs["file_path"];
     this.id = attrs["id"];
   }
+  this.baseUrl = "/photos/"
+  }
+}
+
+Photo.all = [];
+
+Photo.fetch = function(){
+  var url = this.baseUrl;
+  Photo.all = [];
+  $.get(url, function(response){
+    _.each(response, function(photoJson){
+      Photo.all.push(new Photo(photoJson))
+    });
+  });
+}
+
+Photo.find = function(id){
+  return _.find(Photo.all, function(photo){
+    return photo.id == id;
+  });
+}
+
+Photo.prototype.updateAttributes = function(attrs){
+  this.user_id = attrs["user_id"];
+  this.file_path = attrs["file_path"];
+  this.id = attrs["id"];
 }
 
 Photo.prototype.fetch = function(id){
-  var url = "/photos/" + id;
+  var url = this.baseUrl + id;
   var that = this;
   $.get(url, function(response){
-    that.user_id = response["user_id"];
-    that.file_path = response["file_path"];
-    that.id = response["id"];
+    that.updateAttributes(response);
   }, "json");
 };
 
-Photo.prototype.destroy = function(){
-  var url = "/photos/" + this.id;
+Photo.prototype.destroy = function(callback){
+  var url = this.baseUrl + this.id;
   var that = this;
   $.ajax({
     url: url,
@@ -29,18 +53,29 @@ Photo.prototype.destroy = function(){
   });
 };
 
-Photo.prototype.save = function(serializedData){
+Photo.prototype.save = function(callback){
 
   var that = this;
+  var formData = this.serialize()
   if (this.id){
     $.ajax({
-      url: "/photos/" + that.id,
+      url: this.baseUrl + that.id,
       method: "PUT",
-      //WRITE THISsuccess: function
+      formData: formData;
+      success: function(response) {
+        that.updateAttributes(response);
+      }
     })
   }
   else{
-
+    $.ajax({
+      url: this.baseUrl,
+      method: "POST",
+      formData: formData;
+      success: function(response) {
+        that.updateAttributes(response);
+      }
+    })
   }
 }
 //

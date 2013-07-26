@@ -1,4 +1,4 @@
-var User = function(attrs){
+var Tag = function(attrs){
   if (attrs){
     this.name = attrs["name"];
     this.id = attrs["id"];
