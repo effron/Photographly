@@ -1,0 +1,13 @@
+<%= form_for @user do |f| %>
+  <%= f.label :name, "Name" %>
+  <%= f.text_field :name %>
+
+  <%= f.label :password, "Password" %>
+  <%= f.password_field :password %>
+
+  <%= f.label :password_confirmation, "Confirm password" %>
+  <%= f.password_field :password_confirmation %>
+
+  <%= f.submit value: "Sign up for Photographly" %>
+
+<% end %>
