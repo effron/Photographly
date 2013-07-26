@@ -14,7 +14,6 @@ Tag.fetch = function(){
   if (url == null){
     alert("NOT IN CONTEXT OF ANY PHOTOS!!!")
   }
-
   Tag.all = [];
   $.get(url, function(response){
     _.each(response, function(tagJson){

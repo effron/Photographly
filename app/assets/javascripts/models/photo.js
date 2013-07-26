@@ -10,13 +10,14 @@ var Photo = function(attrs){
 Photo.baseUrl = "/photos/"
 Photo.all = [];
 
-Photo.fetch = function(){
+Photo.fetch = function(callback){
   var url = this.baseUrl;
   Photo.all = [];
   $.get(url, function(response){
     _.each(response, function(photoJson){
       Photo.all.push(new Photo(photoJson))
     });
+    callback()
   });
 }
 
@@ -82,12 +83,5 @@ Photo.prototype.save = function(callback){
 Photo.prototype.serialize = function() {
   return $.param({file_path: this.file_path})
 }
-//
-// photo = new Photo
-// photo.fetch(3)
-// photo.file_path = //exists
-//
-// photo.user_id = 5
-// //this should do something
-// photo.save();
+
 

@@ -1,3 +1,0 @@
-var PhotoViewController = function($element){
-
-}

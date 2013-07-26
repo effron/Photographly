@@ -1,0 +1,6 @@
+<h2> Cat Photos </h2>
+<ul class="photo_index">
+  <% _.each(photos, function(photo){%>
+    <li><img src="<%= photo.file_path %>"></li>
+  <% }); %>
+</ul>
