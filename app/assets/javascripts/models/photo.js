@@ -5,9 +5,9 @@ var Photo = function(attrs){
     this.id = attrs["id"];
   }
   this.baseUrl = "/photos/"
-  }
 }
 
+Photo.baseUrl = "/photos/"
 Photo.all = [];
 
 Photo.fetch = function(){
@@ -56,12 +56,12 @@ Photo.prototype.destroy = function(callback){
 Photo.prototype.save = function(callback){
 
   var that = this;
-  var formData = this.serialize()
+  var photoForm = this.serialize()
   if (this.id){
     $.ajax({
       url: this.baseUrl + that.id,
       method: "PUT",
-      formData: formData;
+      data: photoForm,
       success: function(response) {
         that.updateAttributes(response);
       }
@@ -71,12 +71,16 @@ Photo.prototype.save = function(callback){
     $.ajax({
       url: this.baseUrl,
       method: "POST",
-      formData: formData;
+      data: photoForm,
       success: function(response) {
         that.updateAttributes(response);
       }
     })
   }
+}
+
+Photo.prototype.serialize = function() {
+  return $.param({file_path: this.file_path})
 }
 //
 // photo = new Photo

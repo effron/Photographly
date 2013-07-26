@@ -19,6 +19,10 @@ class PhotosController < ApplicationController
 
   def create
     current_user.photos.build(file_path: params[:file_path])
+    p "LOOK HERE"
+    p params
+    current_user.save!
+    @photo = current_user.photos.last
 
     respond_to do |format|
       format.json { render json: @photo }

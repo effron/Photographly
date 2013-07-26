@@ -1,11 +1,11 @@
 Photographly::Application.routes.draw do
 
-  resources :users, only: [:new, :create, :show]
+  resources :users, only: [:new, :create, :show, :index]
 
   resource :session, only: [:new, :create, :destroy]
 
   resources :photos, only: [:index, :create, :destroy, :show] do
-    resources :tags, only: [:create, :index, :destroy]
+    resources :taggings, only: [:create, :index, :destroy]
   end
 
   resources :friends, only: [:create, :show, :index]

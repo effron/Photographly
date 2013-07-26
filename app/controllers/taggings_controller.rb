@@ -1,7 +1,9 @@
 class TaggingsController < ApplicationController
   def create
     @photo = Photo.find(params[:photo_id])
-    @photo.taggings.build(params[:user_id])
+    puts "THIS IS THE USER ID"
+    p params[:user_id]
+    @photo.taggings.build(user_id: params[:user_id])
     if @photo.save
       respond_to do |format|
         format.json { render json: @photo }

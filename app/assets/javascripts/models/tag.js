@@ -4,14 +4,17 @@ var Tag = function(attrs){
     this.photo_id = attrs["photo_id"];
     this.id = attrs["id"];
   }
-  this.baseUrl = "/photos/"+ this.photo_id + "/tags/"
-  }
+  this.baseUrl = "/photos/"+ this.photo_id + "/taggings/"
 }
 
 Tag.all = [];
 
 Tag.fetch = function(){
   var url = this.baseUrl;
+  if (url == null){
+    alert("NOT IN CONTEXT OF ANY PHOTOS!!!")
+  }
+
   Tag.all = [];
   $.get(url, function(response){
     _.each(response, function(tagJson){
@@ -28,7 +31,7 @@ Tag.find = function(id){
 
 Tag.prototype.updateAttributes = function(attrs){
   this.user_id = attrs["user_id"];
-  this.photo_id = attrs["photo_id"]
+  this.photo_id = attrs["photo_id"];
   this.id = attrs["id"];
 }
 
@@ -48,7 +51,7 @@ Tag.prototype.destroy = function(callback){
     method: "DELETE",
     success: function(response){
       that.id = undefined;
-      console.log("tag deleted. meow");
+      console.log("Tag deleted. meow");
     }
   });
 };
@@ -56,12 +59,12 @@ Tag.prototype.destroy = function(callback){
 Tag.prototype.save = function(callback){
 
   var that = this;
-  var formData = this.serialize()
+  var tagForm = this.serialize()
   if (this.id){
     $.ajax({
       url: this.baseUrl + that.id,
       method: "PUT",
-      formData: formData;
+      data: tagForm,
       success: function(response) {
         that.updateAttributes(response);
       }
@@ -71,10 +74,14 @@ Tag.prototype.save = function(callback){
     $.ajax({
       url: this.baseUrl,
       method: "POST",
-      formData: formData;
+      data: tagForm,
       success: function(response) {
         that.updateAttributes(response);
       }
     })
   }
+}
+
+Tag.prototype.serialize = function() {
+  return $.param({user_id: this.user_id})
 }

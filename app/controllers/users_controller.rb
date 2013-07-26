@@ -18,4 +18,11 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  def index
+    @users = current_user.friends
+
+    respond_to do |format|
+      format.json { render json: @users}
+    end
+  end
 end

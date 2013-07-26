@@ -4,8 +4,8 @@ var User = function(attrs){
     this.id = attrs["id"];
   }
   this.baseUrl = "/users/"
-  }
 }
+User.baseUrl = "/users/"
 
 User.all = [];
 
@@ -46,7 +46,7 @@ User.prototype.destroy = function(callback){
     method: "DELETE",
     success: function(response){
       that.id = undefined;
-      console.log("user deleted. meow");
+      console.log("User deleted. meow");
     }
   });
 };
@@ -54,12 +54,12 @@ User.prototype.destroy = function(callback){
 User.prototype.save = function(callback){
 
   var that = this;
-  var formData = this.serialize()
+  var tagForm = this.serialize()
   if (this.id){
     $.ajax({
       url: this.baseUrl + that.id,
       method: "PUT",
-      formData: formData;
+      data: tagForm,
       success: function(response) {
         that.updateAttributes(response);
       }
@@ -69,10 +69,14 @@ User.prototype.save = function(callback){
     $.ajax({
       url: this.baseUrl,
       method: "POST",
-      formData: formData;
+      data: tagForm,
       success: function(response) {
         that.updateAttributes(response);
       }
     })
   }
+}
+
+User.prototype.serialize = function() {
+  return $.param({name: this.name})
 }
