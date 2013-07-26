@@ -1,36 +1,38 @@
 var Tag = function(attrs){
   if (attrs){
-    this.name = attrs["name"];
+    this.user_id = attrs["user_id"];
+    this.photo_id = attrs["photo_id"];
     this.id = attrs["id"];
   }
-  this.baseUrl = "/users/"
+  this.baseUrl = "/photos/"+ this.photo_id + "/tags/"
   }
 }
 
-User.all = [];
+Tag.all = [];
 
-User.fetch = function(){
+Tag.fetch = function(){
   var url = this.baseUrl;
-  User.all = [];
+  Tag.all = [];
   $.get(url, function(response){
-    _.each(response, function(userJson){
-      User.all.push(new User(userJson))
+    _.each(response, function(tagJson){
+      Tag.all.push(new Tag(tagJson))
     });
   });
 }
 
-User.find = function(id){
-  return _.find(User.all, function(user){
-    return user.id == id;
+Tag.find = function(id){
+  return _.find(Tag.all, function(tag){
+    return tag.id == id;
   });
 }
 
-User.prototype.updateAttributes = function(attrs){
-  this.name = attrs["name"];
+Tag.prototype.updateAttributes = function(attrs){
+  this.user_id = attrs["user_id"];
+  this.photo_id = attrs["photo_id"]
   this.id = attrs["id"];
 }
 
-User.prototype.fetch = function(id){
+Tag.prototype.fetch = function(id){
   var url = this.baseUrl + id;
   var that = this;
   $.get(url, function(response){
@@ -38,7 +40,7 @@ User.prototype.fetch = function(id){
   }, "json");
 };
 
-User.prototype.destroy = function(callback){
+Tag.prototype.destroy = function(callback){
   var url = this.baseUrl + this.id;
   var that = this;
   $.ajax({
@@ -46,12 +48,12 @@ User.prototype.destroy = function(callback){
     method: "DELETE",
     success: function(response){
       that.id = undefined;
-      console.log("user deleted. meow");
+      console.log("tag deleted. meow");
     }
   });
 };
 
-User.prototype.save = function(callback){
+Tag.prototype.save = function(callback){
 
   var that = this;
   var formData = this.serialize()
